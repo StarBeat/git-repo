@@ -962,7 +962,7 @@ later is required to fix a server side protocol bug.
       fd.write('\n')
     return 0
 
-  def UpdateCopyLinkfileList(self, manifest):
+  def UpdateCopyLinkSparsefileList(self, manifest):
     """Save all dests of copyfile and linkfile, and update them if needed.
 
     Returns:
@@ -971,11 +971,14 @@ later is required to fix a server side protocol bug.
     new_paths = {}
     new_linkfile_paths = []
     new_copyfile_paths = []
+    sparsefile_path = []
     for project in self.GetProjects(None, missing_ok=True,
                                     manifest=manifest, all_manifests=False):
       new_linkfile_paths.extend(x.dest for x in project.linkfiles)
       new_copyfile_paths.extend(x.dest for x in project.copyfiles)
-      print(project.sparsefiles)
+      sparsefile_path.extend(x for x in project.sparsefiles)
+    
+    print(sparsefile_path)
 
     new_paths = {
         'linkfile': new_linkfile_paths,
@@ -1369,7 +1372,7 @@ later is required to fix a server side protocol bug.
           print('\nerror: Local checkouts *not* updated.', file=sys.stderr)
           sys.exit(1)
 
-      err_update_linkfiles = not self.UpdateCopyLinkfileList(m)
+      err_update_linkfiles = not self.UpdateCopyLinkSparsefileList(m)
       if err_update_linkfiles:
         err_event.set()
         if opt.fail_fast:

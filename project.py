@@ -1544,8 +1544,8 @@ class Project(object):
     """
     self.linkfiles.append(_LinkFile(self.worktree, src, topdir, dest))
 
-  def AddSparseFile(self, src, dest, topdir):
-    self.sparsefiles.append(_LinkFile(self.worktree, src, topdir, dest))
+  def AddSparseFile(self, src, topdir):
+    self.sparsefiles.append((self.worktree, src, topdir))
 
   def AddAnnotation(self, name, value, keep):
     self.annotations.append(Annotation(name, value, keep))

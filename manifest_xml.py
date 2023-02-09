@@ -1905,10 +1905,8 @@ https://gerrit.googlesource.com/git-repo/+/HEAD/docs/manifest-format.md
 
   def _ParseSparseFile(self, project, node):
     src = self._reqatt(node, 'src')
-    dest = self._reqatt(node, 'dest')
     if not self.IsMirror:
-      self._ValidateFilePaths('sparsefile', src, dest)
-      project.AddSparseFile(src, dest, self.topdir)
+      project.AddSparseFile(src, self.topdir)
 
   def _ParseAnnotation(self, element, node):
     name = self._reqatt(node, 'name')
