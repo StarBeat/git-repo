@@ -975,6 +975,7 @@ later is required to fix a server side protocol bug.
                                     manifest=manifest, all_manifests=False):
       new_linkfile_paths.extend(x.dest for x in project.linkfiles)
       new_copyfile_paths.extend(x.dest for x in project.copyfiles)
+      print(project.sparsefiles)
 
     new_paths = {
         'linkfile': new_linkfile_paths,

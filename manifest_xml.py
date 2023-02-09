@@ -1670,6 +1670,8 @@ https://gerrit.googlesource.com/git-repo/+/HEAD/docs/manifest-format.md
         self._ParseCopyFile(project, n)
       if n.nodeName == 'linkfile':
         self._ParseLinkFile(project, n)
+      if n.nodeName == 'sparsefile':
+        self._ParseSparseFile(project, n)
       if n.nodeName == 'annotation':
         self._ParseAnnotation(project, n)
       if n.nodeName == 'project':
@@ -1900,6 +1902,13 @@ https://gerrit.googlesource.com/git-repo/+/HEAD/docs/manifest-format.md
       # We only validate paths if we actually plan to process them.
       self._ValidateFilePaths('linkfile', src, dest)
       project.AddLinkFile(src, dest, self.topdir)
+
+  def _ParseSparseFile(self, project, node):
+    src = self._reqatt(node, 'src')
+    dest = self._reqatt(node, 'dest')
+    if not self.IsMirror:
+      self._ValidateFilePaths('sparsefile', src, dest)
+      project.AddSparseFile(src, dest, self.topdir)
 
   def _ParseAnnotation(self, element, node):
     name = self._reqatt(node, 'name')

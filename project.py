@@ -562,6 +562,7 @@ class Project(object):
     self.snapshots = {}
     self.copyfiles = []
     self.linkfiles = []
+    self.sparsefiles = []
     self.annotations = []
     self.dest_branch = dest_branch
     self.old_revision = old_revision
@@ -1542,6 +1543,9 @@ class Project(object):
     Further checking will be handled when the actual link happens.
     """
     self.linkfiles.append(_LinkFile(self.worktree, src, topdir, dest))
+
+  def AddSparseFile(self, src, dest, topdir):
+    self.sparsefiles.append(_LinkFile(self.worktree, src, topdir, dest))
 
   def AddAnnotation(self, name, value, keep):
     self.annotations.append(Annotation(name, value, keep))
