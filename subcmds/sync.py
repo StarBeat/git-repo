@@ -971,14 +971,33 @@ later is required to fix a server side protocol bug.
     new_paths = {}
     new_linkfile_paths = []
     new_copyfile_paths = []
-    sparsefile_path = []
+    sparsefile_paths = []
     for project in self.GetProjects(None, missing_ok=True,
                                     manifest=manifest, all_manifests=False):
       new_linkfile_paths.extend(x.dest for x in project.linkfiles)
       new_copyfile_paths.extend(x.dest for x in project.copyfiles)
-      sparsefile_path.extend(x for x in project.sparsefiles)
+      sparsefile_paths.extend(x for x in project.sparsefiles)
     
-    print(sparsefile_path)
+    print(sparsefile_paths)
+    for sparsefile_path in sparsefile_paths:
+      top_dir = sparsefile_path[2]
+      dst_dir = sparsefile_path[0]
+      sparsefile = sparsefile_path[1]
+      _path = os.path.join(top_dir,".repo/projects",dst_dir[len(top_dir)+1:] + '.git', "info/sparse-checkout")
+      print("sparsefile:")
+      print("--------")
+      print(_path)
+      with open(_path, 'w+') as f:
+        all_lines = f.read().splitlines()
+        f.seek(0)
+        all_lines.append(sparsefile)
+        all_lines=list(set(all_lines))
+        print(all_lines)
+        print("--------")
+        for l in all_lines:
+          f.write(l + '\n')
+        
+        
 
     new_paths = {
         'linkfile': new_linkfile_paths,
