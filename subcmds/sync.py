@@ -987,7 +987,7 @@ later is required to fix a server side protocol bug.
       print("sparsefile:")
       print("--------")
       print(_path)
-      with open(_path, 'w+') as f:
+      with open(_path, 'r+') as f:
         all_lines = f.read().splitlines()
         f.seek(0)
         all_lines.append(sparsefile)
